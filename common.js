@@ -18,6 +18,9 @@ exports.baseProtocol = baseProtocol;
 var baseUrl = baseProtocol + '://' + baseHost + ':' + basePort;
 exports.baseUrl = baseUrl;
 
+var default_page_limit = 20;
+exports.default_page_limit = default_page_limit;
+
 exports.uuid_regex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 exports.security_relm_login = "www.campsite.org";
 exports.security_relm_token = "api.campsite.org, user:<api-key>, pass:<none>";

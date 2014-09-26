@@ -183,6 +183,8 @@ Resource.prototype.find_all = function (req, resp, next, custom_handler) {
     var that = this;
 
     var query = knex(this.tableName);
+
+    // remember to check the state of the fake-delete column when evaluating rows to return
     if (this.deleted_col) {
         query.where(this.tableName + '.' + this.deleted_col, 0);
     }
@@ -520,7 +522,8 @@ Resource.prototype.assemble_paging_links = function (req, max) {
 //Format : limit=<size of result set>[,offset=<num to skip over>]
 Resource.prototype.apply_paging = function (req, query, quiet) {
     if (!req.query.hasOwnProperty('limit')) {
-        return;
+        req.query.limit = common.default_page_limit;
+        console.log("Using default limit: "+common.default_page_limit);
     }
 
     var limit = req.query.limit;

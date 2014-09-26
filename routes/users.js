@@ -56,12 +56,29 @@ var get_now = function () {
     return new Date();
 };
 
+var single_handler = function (result) {
+    delete result.username;
+    delete result.username_canonical;
+    delete result.email;
+    delete result.email_canonical;
+    delete result.salt;
+    delete result.password;
+    delete result.roles;
+
+    return result;
+};
+
+var collection_handler = function (result_set) {
+    __.each(result_set, single_handler);
+    return result_set;
+};
+
 exports.find_all = function (req, resp, next) {
-    return resource.find_all(req, resp, next);
+    return resource.find_all(req, resp, next, collection_handler);
 };
 
 exports.find_by_primary_key = function (req, resp, next) {
-    return resource.find_by_primary_key(req, resp, next);
+    return resource.find_by_primary_key(req, resp, next, single_handler);
 };
 
 exports.create = function (req, resp, next) {
